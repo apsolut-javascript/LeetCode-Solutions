@@ -1,0 +1,32 @@
+{
+  "name": "leetcode-solutions",
+  "version": "1.0.0",
+  "description": "Peter Liang's LeetCode practices",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx jest",
+    "test:dev": "npx jest --watch"
+  },
+  "repository": "git+https://github.com/Peter-Liang/LeetCode-Solutions.git",
+  "keywords": [
+    "LeetCode",
+    "solutions",
+    "practices"
+  ],
+  "author": "Peter Liang",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Peter-Liang/LeetCode-Solutions/issues"
+  },
+  "homepage": "https://github.com/Peter-Liang/LeetCode-Solutions#readme",
+  "devDependencies": {
+    "@babel/core": "^7.5.0",
+    "@babel/preset-env": "^7.5.2",
+    "debug": "^4.1.1",
+    "jest": "^24.8.0",
+    "jest-babel": "^1.0.1"
+  },
+  "dependencies": {
+    "@types/jest": "^24.0.15"
+  }
+}
