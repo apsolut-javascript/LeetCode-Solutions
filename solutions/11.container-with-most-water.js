@@ -8,12 +8,33 @@
  * @return {number}
  */
 var maxArea = function(height) {
-  let result = 0
-  for (let i = 0; i < height.length; i++) {
-    for (let j = i + 1; j < height.length; j++) {
-      const area = Math.min(height[i], height[j]) * (j - i)
-      if (area > result) {
-        result = area
+  let leftCursor = 0,
+    rightCursor = height.length - 1,
+    leftMaxHeight = height[0],
+    rightMaxHeight = height[height.length - 1],
+    result = 0
+  const tryUpdateResult = () => {
+    const area =
+      Math.min(leftMaxHeight, rightMaxHeight) * (rightCursor - leftCursor)
+    if (area > result) {
+      result = area
+    }
+  }
+  tryUpdateResult()
+  while (rightCursor > leftCursor) {
+    if (leftMaxHeight > rightMaxHeight) {
+      rightCursor--
+      const newHeight = height[rightCursor]
+      if (newHeight > rightMaxHeight) {
+        rightMaxHeight = newHeight
+        tryUpdateResult()
+      }
+    } else {
+      leftCursor++
+      const newHeight = height[leftCursor]
+      if (newHeight > leftMaxHeight) {
+        leftMaxHeight = newHeight
+        tryUpdateResult()
       }
     }
   }
