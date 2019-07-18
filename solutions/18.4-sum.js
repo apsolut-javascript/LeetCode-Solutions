@@ -10,18 +10,22 @@
  */
 var fourSum = function(nums, target) {
   if (nums.length < 4) return []
-  nums = nums.sort((a, b) => a - b)
+  nums.sort((a, b) => a - b)
   const result = []
   const dict = nums.reduce((p, c) => (p[c] ? (p[c] += 1) : (p[c] = 1), p), {})
   for (let i = 0; i < nums.length; i++) {
+    const x = nums[i]
     for (let j = i + 1; j < nums.length; j++) {
-      for (let k = j + 1; k < nums.length; k++) {
-        const sum = nums[i] + nums[j] + nums[k]
+      const y = nums[j]
+      const remain = target - x - y
+      if (remain > nums.slice(-2).reduce((p, c) => p + c, 0)) continue
+      for (let k = nums.length - 1; k > j; k--) {
+        const z = nums[k]
+        const sum = x + y + z
         const differ = target - sum
+        if (differ > z) break
         if (!dict[differ]) continue
-        const solution = [nums[i], nums[j], nums[k], differ].sort(
-          (a, b) => a - b
-        )
+        const solution = [x, y, z, differ]
         const constitute = solution.reduce(
           (p, c) => (p[c] ? (p[c] += 1) : (p[c] = 1), p),
           {}
@@ -29,8 +33,10 @@ var fourSum = function(nums, target) {
         const isValid = Object.entries(constitute).every(
           ([k, v]) => dict[k] >= v
         )
+        if (!isValid) continue
+
+        solution.sort((a, b) => a - b)
         if (
-          !isValid ||
           result.some(
             a =>
               a[0] == solution[0] &&
@@ -40,7 +46,6 @@ var fourSum = function(nums, target) {
           )
         )
           continue
-
         result.push(solution)
       }
     }

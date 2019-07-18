@@ -6,4 +6,11 @@ describe("problem 18", () => {
     expect(result).toHaveLength(expected.length)
     result.forEach(a => expect(expected).toContainEqual(a))
   })
+
+  test("case 2", () => {
+    const expected = [[0, 4, 4, 4], [2, 2, 4, 4]]
+    const result = fourSum([0, 4, -5, 2, -2, 4, 2, -1, 4], 12)
+    expect(result).toHaveLength(expected.length)
+    result.forEach(a => expect(expected).toContainEqual(a))
+  })
 })
