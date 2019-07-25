@@ -15,31 +15,36 @@
  * @return {ListNode}
  */
 var mergeKLists = function(lists) {
-  if (!lists || lists.length == 0) return null
+  if (!lists) return null
+  for (let i = lists.length - 1; i >= 0; i--) {
+    if (!lists[i]) lists.splice(i, 1)
+  }
+  if (lists.length == 0) return null
 
   const head = { next: null }
   let tail = head
-  let i = 0
   while (true) {
-    const avail = lists.filter(a => a && a.val != null)
-    if (avail.length == 0) break
+    let index = null
+    let val = Number.MAX_VALUE
+    for (let i = lists.length - 1; i >= 0; i--) {
+      if (lists[i].val > val) {
+        continue
+      }
 
-    const val = avail.reduce(
-      (p, c) => (p <= c.val ? p : c.val),
-      Number.POSITIVE_INFINITY
-    )
-    for (let i = 0; i < lists.length; i++) {
-      if (!lists[i] || lists[i].val != val) continue
-
-      lists[i] = lists[i].next
+      val = lists[i].val
+      index = i
+    }
+    if (index == null) {
       break
+    }
+
+    if (!lists[index].next) {
+      lists.splice(index, 1)
+    } else {
+      lists[index] = lists[index].next
     }
     tail.next = { val }
     tail = tail.next
-    i++
-    if (i > 100000) {
-      break
-    }
   }
 
   return head.next
