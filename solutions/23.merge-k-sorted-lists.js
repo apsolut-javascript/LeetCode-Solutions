@@ -10,6 +10,7 @@
  *     this.next = null;
  * }
  */
+
 /**
  * @param {ListNode[]} lists
  * @return {ListNode}
@@ -20,33 +21,25 @@ var mergeKLists = function(lists) {
     if (!lists[i]) lists.splice(i, 1)
   }
   if (lists.length == 0) return null
+  if (lists.length == 1) return lists[0]
+
+  lists.sort((a, b) => b.val - a.val)
 
   const head = { next: null }
   let tail = head
-  while (true) {
-    let index = null
-    let val = Number.MAX_VALUE
-    for (let i = lists.length - 1; i >= 0; i--) {
-      if (lists[i].val > val) {
-        continue
-      }
-
-      val = lists[i].val
-      index = i
-    }
-    if (index == null) {
-      break
-    }
-
-    if (!lists[index].next) {
-      lists.splice(index, 1)
+  while (lists.length > 1) {
+    const node = lists[lists.length - 1]
+    if (!node.next) {
+      lists.pop()
     } else {
-      lists[index] = lists[index].next
+      lists[lists.length - 1] = node.next
+      lists.sort((a, b) => b.val - a.val)
     }
-    tail.next = { val }
+    tail.next = node
     tail = tail.next
   }
 
+  tail.next = lists[0]
   return head.next
 }
 
