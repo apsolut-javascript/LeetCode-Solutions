@@ -20,4 +20,24 @@ describe("problem 26", () => {
     })
     expect(input).toHaveLength(answer.length)
   })
+
+  test("case 3", () => {
+    const input = [1, 2]
+    expect(removeDuplicates(input)).toBe(2)
+    const answer = [1, 2]
+    answer.forEach((a, i) => {
+      expect(input).toContainEqual(a)
+    })
+    expect(input).toHaveLength(answer.length)
+  })
+
+  test("case 4", () => {
+    const input = [1, 1]
+    expect(removeDuplicates(input)).toBe(1)
+    const answer = [1]
+    answer.forEach((a, i) => {
+      expect(input).toContainEqual(a)
+    })
+    expect(input).toHaveLength(answer.length)
+  })
 })

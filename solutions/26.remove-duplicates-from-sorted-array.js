@@ -8,23 +8,21 @@
  * @return {number}
  */
 var removeDuplicates = function(nums) {
-  let i = nums.length - 1
-  let j = i - 1
-  while (j >= 0) {
-    let count = 0
-    while (j >= 0 && nums[i] == nums[j]) {
-      j--
-      count++
-    }
+  let i = 0
+  let len = 0
+  while (i < nums.length) {
+    const j = i
+    do {
+      i++
+    } while (nums[i] == nums[j])
+    nums[len] = nums[j]
 
-    if (count > 0) {
-      nums.splice(j + 1, count)
-    }
-    i = j
-    j--
+    len++
   }
 
-  return nums.length
+  nums.length = len
+
+  return len
 }
 
 module.exports = removeDuplicates
