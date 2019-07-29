@@ -19,20 +19,30 @@ var findSubstring = function(s, words) {
 
   const wordLength = words[0].length
   const maxLength = s.length - words.length * wordLength + 1
+  const wordCount = words.reduce((p, c) => {
+    if (c in p) {
+      p[c] += 1
+    } else {
+      p[c] = 1
+    }
+    return p
+  }, {})
   outer: for (let i = 0; i < maxLength; i++) {
     if (!starts.has(s[i])) {
       continue
     }
 
-    const remainWords = [...words]
+    const remainWords = {
+      ...wordCount,
+    }
     for (let j = 0; j < words.length; j++) {
       const startIndex = i + j * wordLength
       const word = s.slice(startIndex, startIndex + wordLength)
-      const index = remainWords.indexOf(word)
-      if (index == -1) {
+      const count = remainWords[word]
+      if (!count) {
         continue outer
       }
-      remainWords.splice(index, 1)
+      remainWords[word] -= 1
     }
     result.push(i)
   }
