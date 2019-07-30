@@ -14,26 +14,34 @@ var longestValidParentheses = function(s) {
   if (!s) return 0
 
   let maxLen = 0
+  let left = 0
+  let right = 0
   for (let i = 0; i < s.length; i++) {
-    if (s.length - i < maxLen) break
-    let stack = 0
-    let start = i
-    for (let j = i; j < s.length; j++) {
-      if (s[j] == ")" && stack == 0) {
-        start = j + 1
-        continue
-      }
+    if (s[i] == ")") {
+      right++
+    } else {
+      left++
+    }
 
-      if (s[j] == "(") {
-        stack++
-        if (stack > s.length - j) break
-      } else {
-        stack--
-        if (stack == 0) {
-          const len = j - start + 1
-          if (len > maxLen) maxLen = len
-        }
-      }
+    if (left == right) {
+      maxLen = Math.max(maxLen, left * 2)
+    } else if (left < right) {
+      left = right = 0
+    }
+  }
+
+  left = right = 0
+  for (let i = s.length - 1; i >= 0; i--) {
+    if (s[i] == ")") {
+      right++
+    } else {
+      left++
+    }
+
+    if (left == right) {
+      maxLen = Math.max(maxLen, left * 2)
+    } else if (right < left) {
+      left = right = 0
     }
   }
 

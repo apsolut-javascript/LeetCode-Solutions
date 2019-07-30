@@ -20,4 +20,8 @@ describe("problem 32", () => {
   test("case 6", () => {
     expect(target("()")).toBe(2)
   })
+
+  test("case 7", () => {
+    expect(target("()()")).toBe(4)
+  })
 })
