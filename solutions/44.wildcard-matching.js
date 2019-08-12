@@ -9,45 +9,73 @@
  * @return {boolean}
  */
 var isMatch = function(s, p) {
-  return subMatch(s, 0, p.replace(/\*+/g, "*"), 0)
+  return subMatch(s, 0, p.replace(/\*+/g, "*"), 0, [])
 }
 
-function subMatch(s, sStart, p, pStart) {
-  if (s.length < sStart || p.length < pStart) return false
-  if (s.length == sStart && p.length == pStart) return true
-
-  const pattern = p[pStart]
-  if (pattern == "*") {
-    if (pStart == p.length - 1) return true
-    let nextAsterisk = p.indexOf("*", pStart + 1)
-    if (nextAsterisk == -1) {
-      const subString = s.slice(-(p.length - pStart - 1))
-      const subPattern = p.slice(pStart + 1)
-      return subPattern.split("").every((c, i) => c == "?" || subString[i] == c)
-    }
-    const subPattern = p.slice(pStart + 1, nextAsterisk)
-    let nextMatch = getNextMatch(s, subPattern, sStart)
-    while (nextMatch != -1) {
-      if (
-        subMatch(
-          s,
-          nextMatch + subPattern.length,
-          p,
-          pStart + 1 + subPattern.length
-        )
-      ) {
-        return true
-      }
-
-      nextMatch = getNextMatch(s, subPattern, nextMatch + 1)
-    }
-
-    return false
+function subMatch(s, sStart, p, pStart, cache) {
+  const cachedResult = cache[sStart] && cache[sStart][pStart]
+  if (cachedResult != undefined) return cachedResult[2]
+  if (s.length < sStart || p.length < pStart) {
+    return cacheResult(cache, sStart, pStart, false)
+  }
+  if (s.length == sStart && p.length == pStart) {
+    return cacheResult(cache, sStart, pStart, true)
   }
 
-  if (pattern != "?" && pattern != s[sStart]) return false
+  let sIndex = sStart
+  let pIndex = pStart
+  while (sIndex < s.length && pIndex < p.length) {
+    const pattern = p[pIndex]
 
-  return subMatch(s, sStart + 1, p, pStart + 1)
+    if (pattern == "*") {
+      if (pIndex == p.length - 1) {
+        return cacheResult(cache, sStart, pStart, true)
+      }
+
+      let nextAsterisk = p.indexOf("*", pIndex + 1)
+      if (nextAsterisk == -1) {
+        const subString = s.slice(sIndex).slice(-(p.length - pIndex - 1))
+        const subPattern = p.slice(pIndex + 1)
+        const result =
+          subString.length == subPattern.length &&
+          subPattern.split("").every((c, i) => c == "?" || subString[i] == c)
+
+        return cacheResult(cache, sStart, pStart, result)
+      }
+      const subPattern = p.slice(pIndex + 1, nextAsterisk)
+      let nextMatch = getNextMatch(s, subPattern, sIndex)
+      while (nextMatch != -1) {
+        if (
+          subMatch(
+            s,
+            nextMatch + subPattern.length,
+            p,
+            pIndex + 1 + subPattern.length,
+            cache
+          )
+        ) {
+          return cacheResult(cache, sStart, pStart, true)
+        }
+
+        nextMatch = getNextMatch(s, subPattern, nextMatch + 1)
+      }
+
+      return cacheResult(cache, sStart, pStart, false)
+    }
+
+    if (pattern != "?" && pattern != s[sIndex]) {
+      return cacheResult(cache, sStart, pStart, false)
+    }
+
+    sIndex++
+    pIndex++
+  }
+
+  if (pIndex == p.length - 1 && p[pIndex] == "*") {
+    return cacheResult(cache, sStart, pStart, true)
+  }
+  const result = sIndex == s.length && pIndex == p.length
+  return cacheResult(cache, sStart, pStart, result)
 }
 
 function getNextMatch(s, pattern, index) {
@@ -66,6 +94,14 @@ function getNextMatch(s, pattern, index) {
   }
 
   return -1
+}
+
+function cacheResult(cache, sStart, pStart, result) {
+  if (!cache[sStart]) {
+    cache[sStart] = []
+  }
+  cache[sStart][pStart] = result
+  return result
 }
 
 module.exports = isMatch
