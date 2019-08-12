@@ -8,31 +8,23 @@
  * @return {void} Do not return anything, modify matrix in-place instead.
  */
 var rotate = function(matrix) {
-  const maxDepath = Math.trunc(matrix.length / 2)
+  const maxDepath = matrix.length / 2 + 1
   const n = matrix.length
-  const temps = []
 
-  function rotateDepth(depth) {
-    if (depth > maxDepath) return
+  for (let depth = 0; depth < maxDepath; depth++) {
     for (let i = depth; i < matrix.length - depth - 1; i++) {
-      temps.push(matrix[i][n - 1 - depth])
+      let temp1 = matrix[i][n - 1 - depth]
       matrix[i][n - 1 - depth] = matrix[depth][i]
 
-      temps.push(matrix[n - 1 - depth][n - 1 - i])
-      matrix[n - 1 - depth][n - 1 - i] = temps.shift()
+      let temp2 = matrix[n - 1 - depth][n - 1 - i]
+      matrix[n - 1 - depth][n - 1 - i] = temp1
 
-      temps.push(matrix[n - 1 - i][depth])
-      matrix[n - 1 - i][depth] = temps.shift()
+      temp1 = matrix[n - 1 - i][depth]
+      matrix[n - 1 - i][depth] = temp2
 
-      matrix[depth][i] = temps.shift()
+      matrix[depth][i] = temp1
     }
-
-    rotateDepth(depth + 1)
   }
-
-  rotateDepth(0)
-
-  return matrix
 }
 
 module.exports = rotate
