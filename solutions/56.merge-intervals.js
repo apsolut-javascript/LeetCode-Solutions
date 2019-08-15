@@ -8,15 +8,14 @@
  * @return {number[][]}
  */
 var merge = function(intervals) {
-  let result = tryMerge(intervals)
-
-  let recheck = tryMerge(result)
-  while (recheck.length != result.length) {
-    result = recheck
-    recheck = tryMerge(result)
+  let first = tryMerge(intervals)
+  let final = tryMerge(first)
+  while (final.length != first.length) {
+    first = final
+    final = tryMerge(first)
   }
 
-  return recheck
+  return final
 }
 
 function tryMerge(intervals) {
@@ -25,19 +24,10 @@ function tryMerge(intervals) {
     const [intervalLeft, intervalRight] = intervals[i]
     for (let j = result.length - 1; j >= 0; j--) {
       const [resultLeft, resultRight] = result[j]
-      if (resultLeft <= intervalLeft && intervalLeft <= resultRight) {
-        result[j][1] = Math.max(intervalRight, resultRight)
-        continue outer
-      }
-
-      if (resultLeft <= intervalRight && intervalRight <= resultRight) {
-        result[j][0] = Math.min(intervalLeft, resultLeft)
-        continue outer
-      }
-
-      if (intervalLeft < resultLeft && resultRight < intervalRight) {
-        result.splice(j, 1)
-      }
+      if (resultRight < intervalLeft || intervalRight < resultLeft) continue
+      result[j][0] = Math.min(intervalLeft, resultLeft)
+      result[j][1] = Math.max(intervalRight, resultRight)
+      continue outer
     }
 
     result.push(intervals[i])
