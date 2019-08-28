@@ -2,5 +2,6 @@ import target from "$1"
 
 describe("problem $2", () => {
   test("case 1", () => {
+    expect(target()).toBe()
   })
 })
