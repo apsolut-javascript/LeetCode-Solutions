@@ -8,4 +8,8 @@ describe("problem 67", () => {
   test("case 2", () => {
     expect(target("1010", "1011")).toBe("10101")
   })
+
+  test("case 3", () => {
+    expect(target("0", "0")).toBe("0")
+  })
 })
