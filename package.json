@@ -6,7 +6,7 @@
   "scripts": {
     "test": "npx jest",
     "dev": "npx jest --watch",
-    "start": "DEBUG=index npx nodemon --exec babel-node index.js",
+    "start": "DEBUG=index node --experimental-modules index.js",
     "create-test": "npx babel-node ./script/create-test.js"
   },
   "repository": "git+https://github.com/Peter-Liang/LeetCode-Solutions.git",
@@ -35,5 +35,6 @@
   "dependencies": {
     "@babel/node": "^7.5.0",
     "@types/jest": "^24.0.15"
-  }
+  },
+  "type": "module"
 }
