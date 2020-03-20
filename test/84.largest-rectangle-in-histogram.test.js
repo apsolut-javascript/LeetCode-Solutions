@@ -29,7 +29,11 @@ describe("problem 84", () => {
     expect(target([0])).toBe(0);
   });
 
-  // test("case 8", () => {
-  //   expect(target(Array.from({ length: 20000 }, (_, i) => i))).toBe(1000000);
-  // });
+  test("case 8", () => {
+    expect(target([1, 1, 1, 5, 1, 1, 1])).toBe(7);
+  });
+
+  test("case 9", () => {
+    expect(target(Array.from({ length: 20000 }, (_, i) => i))).toBe(1000000);
+  });
 });
