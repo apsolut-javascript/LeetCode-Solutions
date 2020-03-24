@@ -34,6 +34,18 @@ describe("problem 84", () => {
   });
 
   test("case 9", () => {
-    expect(target(Array.from({ length: 20000 }, (_, i) => i))).toBe(1000000);
+    expect(target([1, 2])).toBe(2);
+  });
+
+  test("case 10", () => {
+    expect(target(Array.from({ length: 20000 }, (_, i) => i))).toBe(100000000);
+  });
+
+  test("case 11", () => {
+    expect(target([1, 2, 2])).toBe(4);
+  });
+
+  test("case 12", () => {
+    expect(target([4, 2, 0, 3, 2, 5])).toBe(6);
   });
 });

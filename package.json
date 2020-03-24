@@ -37,5 +37,5 @@
     "@babel/node": "^7.5.0",
     "@types/jest": "^24.0.15"
   },
-  "type": "module"
+  "type": "commonjs"
 }

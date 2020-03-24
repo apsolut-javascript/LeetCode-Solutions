@@ -9,49 +9,29 @@
  * @param {number[]} heights
  * @return {number}
  */
-var largestRectangleArea = function(heights, start = 0) {
-  if (start >= heights.length) return 0;
+var largestRectangleArea = function(heights) {
+  if (heights.length == 0) return 0;
 
+  const stack = [-1];
   let maxArea = 0;
-  let minHeight = Number.MAX_SAFE_INTEGER;
-  let currentArea = 0;
-  const candidates = [];
-  for (let i = start; i < heights.length; i++) {
-    const currentHeight = heights[i];
-    if (currentHeight < minHeight) {
-      minHeight = currentHeight;
-      currentArea = (i - start + 1) * minHeight;
-      if (currentArea < maxArea) {
-        candidates.push(i + 1);
-        // result.push(largestRectangleArea(heights, i + 1));
-        break;
-      }
-
-      maxArea = currentArea;
-    } else {
-      maxArea += minHeight;
-      if (currentHeight > minHeight) {
-        // result.push(largestRectangleArea(heights, i));
-        candidates.push(i);
-      }
+  for (let i = 0; i < heights.length; i++) {
+    while (stack.length > 1 && heights[stack[stack.length - 1]] > heights[i]) {
+      const h = heights[stack.pop()];
+      const area = h * (i - stack[stack.length - 1] - 1);
+      maxArea = Math.max(area, maxArea);
     }
+    stack.push(i);
   }
 
-  candidates.forEach(a => {
-    const area = largestRectangleArea(heights, a);
-    if (area > maxArea) maxArea = area;
-  });
+  while (stack.length > 1) {
+    const i = stack.pop();
+    const h = heights[i];
+    const area = h * (heights.length - stack[stack.length - 1] - 1);
+    maxArea = Math.max(area, maxArea);
+  }
+
   return maxArea;
 };
-
-function getArea(heights, start, end) {
-  let minHeight = Number.MAX_SAFE_INTEGER;
-  for (let i = start; i < end; i++) {
-    if (heights[i] < minHeight) minHeight = heights[i];
-  }
-
-  return (end - start) * minHeight;
-}
 
 module.exports = largestRectangleArea;
 // export default  largestRectangleArea
