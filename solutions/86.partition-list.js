@@ -27,9 +27,6 @@ var partition = function(nodes, x) {
   let head2 = tail2;
 
   while (cur) {
-    const next = cur.next;
-    cur.next = null;
-
     if (cur.val < x) {
       tail.next = cur;
       tail = tail.next;
@@ -38,13 +35,11 @@ var partition = function(nodes, x) {
       tail2 = tail2.next;
     }
 
-    cur = next;
+    cur = cur.next;
   }
 
-  if (head2.next) {
-    tail.next = head2.next;
-  }
-
+  tail2.next = null;
+  tail.next = head2.next;
   return head.next;
 };
 // @lc code=end
