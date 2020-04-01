@@ -3,15 +3,21 @@
  * @return {number}
  */
 var singleNumber = function(nums) {
-  while (nums.length > 1) {
-    const cur = nums.splice(0, 1)[0];
-    const i = nums.findIndex(a => a == cur);
-    if (i == -1) return cur;
+  outer: for (let i = 0; i < nums.length; i++) {
+    let cur = nums[i];
+    if (cur == 0) continue;
 
-    nums.splice(i, 1);
+    for (let j = i + 1; j < nums.length; j++) {
+      if (nums[j] == cur) {
+        nums[j] = 0;
+        continue outer;
+      }
+    }
+
+    return cur;
   }
 
-  return nums[0];
+  return nums[nums.length - 1];
 };
 
 module.exports = singleNumber;

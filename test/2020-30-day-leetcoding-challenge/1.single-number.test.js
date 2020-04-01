@@ -8,4 +8,12 @@ describe("tests for 2020-30-day-leetcoding-challenge problem 1", () => {
   test("case 2", () => {
     expect(target([4, 1, 2, 1, 2])).toBe(4);
   });
+
+  test("case 3", () => {
+    expect(target([1, 2, 2])).toBe(1);
+  });
+
+  test("case 4", () => {
+    expect(target([2, 1, 2])).toBe(1);
+  });
 });
