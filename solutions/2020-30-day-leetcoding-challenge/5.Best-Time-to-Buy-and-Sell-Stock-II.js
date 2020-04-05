@@ -3,36 +3,22 @@
  * @return {number}
  */
 var maxProfit = function(prices) {
-  const dp = [];
-  return findMaxProfit(prices, 0, dp);
-};
-
-function findMaxProfit(prices, start, dp) {
-  if (dp[start] != null) return dp[start];
-
-  let maxSum = 0;
-  for (let i = start; i < prices.length - 1; i++) {
-    if (prices[i] >= prices[i + 1]) continue;
-    if (dp[i] != null) {
-      if (dp[i] > maxSum) {
-        maxSum = dp[i];
-      }
-      continue;
-    }
-
-    for (let j = i + 1; j < prices.length; j++) {
-      if (prices[i] >= prices[j] || prices[j + 1] >= prices[j]) continue;
-
-      let sum = prices[j] - prices[i];
-      sum += findMaxProfit(prices, j + 1, dp);
-      if (sum > maxSum) {
-        maxSum = sum;
-      }
+  let profit = 0;
+  let isBuy = true;
+  let curPrice = 0;
+  for (let i = 0; i < prices.length; i++) {
+    if (isBuy) {
+      if (prices[i + 1] <= prices[i]) continue;
+      curPrice = prices[i];
+      isBuy = false;
+    } else {
+      if (prices[i + 1] >= prices[i]) continue;
+      profit += prices[i] - curPrice;
+      isBuy = true;
     }
   }
 
-  dp[start] = maxSum;
-  return maxSum;
-}
+  return profit;
+};
 
 module.exports = maxProfit;
