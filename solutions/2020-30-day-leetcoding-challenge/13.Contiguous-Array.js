@@ -5,20 +5,24 @@
 var findMaxLength = function(nums) {
   const total = nums.reduce((p, c) => p + c, 0);
   const possibleMax = Math.min(total, nums.length - total) * 2;
-  let maxLength = 0;
-  for (let i = 0; i < nums.length; i++) {
-    let length = 0;
-    let sum = 0;
-    for (let j = i; j < Math.min(nums.length, i + possibleMax); j += 2) {
-      sum += nums[j] + nums[j + 1];
-      if ((j + 2 - i) / 2 == sum) {
-        length = j + 2 - i;
-      }
+  let curLength = possibleMax;
+
+  while (curLength > 0) {
+    let left = 0;
+    let right = curLength;
+    let sum = nums.slice(0, right).reduce((p, c) => p + c, 0);
+    const expectSum = curLength / 2;
+    while (sum != expectSum && right < nums.length) {
+      sum += nums[right] - nums[left];
+      left++;
+      right++;
     }
-    maxLength = Math.max(maxLength, length);
+
+    if (sum == expectSum) return curLength;
+    curLength -= 2;
   }
 
-  return maxLength;
+  return 0;
 };
 
 module.exports = findMaxLength;
