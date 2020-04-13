@@ -3,25 +3,19 @@
  * @return {number}
  */
 var findMaxLength = function(nums) {
+  const total = nums.reduce((p, c) => p + c, 0);
+  const possibleMax = Math.min(total, nums.length - total) * 2;
   let maxLength = 0;
   for (let i = 0; i < nums.length; i++) {
-    const stack = [nums[i]];
     let length = 0;
-    for (let j = i + 1; j < nums.length; j++) {
-      const cur = nums[j];
-      if (stack.length == 0) {
-        stack.push(cur);
-        continue;
-      }
-
-      if (stack[stack.length - 1] == cur) {
-        stack.push(cur);
-      } else {
-        stack.pop();
-        length += 2;
-        if (stack.length == 0 && length > maxLength) maxLength = length;
+    let sum = 0;
+    for (let j = i; j < Math.min(nums.length, i + possibleMax); j += 2) {
+      sum += nums[j] + nums[j + 1];
+      if ((j + 2 - i) / 2 == sum) {
+        length = j + 2 - i;
       }
     }
+    maxLength = Math.max(maxLength, length);
   }
 
   return maxLength;
