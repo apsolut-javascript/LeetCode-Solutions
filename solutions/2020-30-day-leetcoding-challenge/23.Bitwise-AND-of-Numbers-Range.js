@@ -4,10 +4,15 @@
  * @return {number}
  */
 var rangeBitwiseAnd = function (m, n) {
-  let answer = m;
-  for (let i = m + 1; i <= n; i++) {
+  let answer = m & n;
+  for (let i = 0; i < 31; i++) {
+    const bit = 2 ** i;
+    if (n - bit < m) {
+      break;
+    }
+
+    answer &= n - bit;
     if (answer == 0) return 0;
-    answer &= i;
   }
 
   return answer;
