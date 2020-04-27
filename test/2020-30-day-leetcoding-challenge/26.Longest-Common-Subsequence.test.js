@@ -31,6 +31,6 @@ describe("tests for 2020-30-day-leetcoding-challenge problem 26", () => {
         "hergrwzsjgjmnwfwjyxyhafstetgbydobynmxabavodsfwbqbevozkjkpwvw",
         "pgrwlabutilctsrgbgxorwjezspgxwredqjklabwterwzyzstwpobwjujwjkb"
       )
-    ).toBe(3);
+    ).toBe(19);
   });
 });
