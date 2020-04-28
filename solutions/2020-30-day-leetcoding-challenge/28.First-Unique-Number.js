@@ -8,14 +8,7 @@ var FirstUnique = function (nums) {
   this.nums = [];
 
   for (let i = 0; i < nums.length; i++) {
-    const value = nums[i];
-    if (this.validItems.has(value)) {
-      this.validItems.delete(value);
-      this.invalidItems.add(value);
-    } else if (!this.invalidItems.has(value)) {
-      this.validItems.add(value);
-      this.nums.push(value);
-    }
+    add.call(this, nums[i]);
   }
 };
 
@@ -39,6 +32,10 @@ FirstUnique.prototype.showFirstUnique = function () {
  * @return {void}
  */
 FirstUnique.prototype.add = function (value) {
+  add(value);
+};
+
+function add(value) {
   if (this.validItems.has(value)) {
     this.validItems.delete(value);
     this.invalidItems.add(value);
@@ -46,8 +43,7 @@ FirstUnique.prototype.add = function (value) {
     this.validItems.add(value);
     this.nums.push(value);
   }
-};
-
+}
 /**
  * Your FirstUnique object will be instantiated and called as such:
  * var obj = new FirstUnique(nums)
