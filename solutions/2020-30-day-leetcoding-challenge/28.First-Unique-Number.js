@@ -30,6 +30,8 @@ FirstUnique.prototype.showFirstUnique = function () {
     this.firstIndex = i;
     return value;
   }
+
+  return -1;
 };
 
 /**
