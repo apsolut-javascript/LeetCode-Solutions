@@ -3,8 +3,7 @@
  */
 var FirstUnique = function (nums) {
   this.firstIndex = 0;
-  this.invalidItems = new Set();
-  this.validItems = new Set();
+  this.items = {};
   this.nums = [];
 
   for (let i = 0; i < nums.length; i++) {
@@ -18,7 +17,7 @@ var FirstUnique = function (nums) {
 FirstUnique.prototype.showFirstUnique = function () {
   for (let i = this.firstIndex; i < this.nums.length; i++) {
     const value = this.nums[i];
-    if (this.invalidItems.has(value)) continue;
+    if (this.items[value] != true) continue;
 
     this.firstIndex = i;
     return value;
@@ -36,12 +35,11 @@ FirstUnique.prototype.add = function (value) {
 };
 
 function add(value) {
-  if (this.validItems.has(value)) {
-    this.validItems.delete(value);
-    this.invalidItems.add(value);
-  } else if (!this.invalidItems.has(value)) {
-    this.validItems.add(value);
-    this.nums.push(value);
+  const status = this.items[value];
+  if (status == null) {
+    this.items[value] = true;
+  } else if (status == true) {
+    this.items[value] = false;
   }
 }
 /**
