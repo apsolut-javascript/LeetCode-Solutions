@@ -3,7 +3,7 @@
  */
 var FirstUnique = function (nums) {
   this.firstIndex = 0;
-  this.items = {};
+  this.items = [];
   this.nums = [];
 
   for (let i = 0; i < nums.length; i++) {
@@ -31,13 +31,14 @@ FirstUnique.prototype.showFirstUnique = function () {
  * @return {void}
  */
 FirstUnique.prototype.add = function (value) {
-  add(value);
+  add.call(this, value);
 };
 
 function add(value) {
   const status = this.items[value];
   if (status == null) {
     this.items[value] = true;
+    this.nums.push(value);
   } else if (status == true) {
     this.items[value] = false;
   }
