@@ -1,23 +1,37 @@
 /**
- * @param {number[]} nums
- * @return {number}
+ * Definition for isBadVersion()
+ *
+ * @param {integer} version number
+ * @return {boolean} whether the version is bad
+ * isBadVersion = function(version) {
+ *     ...
+ * };
  */
-var singleNumber = function(nums) {
-  outer: for (let i = 0; i < nums.length; i++) {
-    let cur = nums[i];
-    if (cur == 0) continue;
 
-    for (let j = i + 1; j < nums.length; j++) {
-      if (nums[j] == cur) {
-        nums[j] = 0;
-        continue outer;
+/**
+ * @param {function} isBadVersion()
+ * @return {function}
+ */
+var solution = function (isBadVersion) {
+  /**
+   * @param {integer} n Total versions
+   * @return {integer} The first bad version
+   */
+  return function (n) {
+    let l = 1;
+    let r = n;
+    let min = n;
+    while (l <= r) {
+      const mid = Math.floor((r + l) / 2);
+      const isBad = isBadVersion(mid);
+      if (isBad) {
+        min = mid;
+        r = mid - 1;
+      } else {
+        l = mid + 1;
       }
     }
 
-    return cur;
-  }
-
-  return nums[nums.length - 1];
+    return min;
+  };
 };
-
-module.exports = singleNumber;
