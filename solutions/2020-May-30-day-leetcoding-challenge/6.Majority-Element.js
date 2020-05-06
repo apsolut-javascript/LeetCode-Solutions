@@ -14,15 +14,6 @@ var majorityElement = function (nums) {
       if (elements[c] > major) return c;
     }
   }
-  const elements = Array.prototype.reduce.call(
-    nums,
-    (p, c) => {
-      return p;
-    },
-    {}
-  );
 
-  for (const [k, v] of Object.entries(elements)) {
-    if (v > major) return k;
-  }
+  return nums[0];
 };
