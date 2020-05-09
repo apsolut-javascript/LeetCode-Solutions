@@ -1,18 +1,26 @@
 /**
- * @param {number[][]} coordinates
+ * @param {number} num
  * @return {boolean}
  */
-var checkStraightLine = function (coordinates) {
-  const slope =
-    (coordinates[1][1] - coordinates[0][1]) /
-    (coordinates[1][0] - coordinates[0][0]);
-  for (let i = 2; i < coordinates.length; i++) {
-    if (
-      (coordinates[i][1] - coordinates[i - 1][1]) /
-        (coordinates[i][0] - coordinates[i - 1][0]) !=
-      slope
-    )
-      return false;
+var isPerfectSquare = function (num) {
+  if (num <= 1) return true;
+
+  let left = 1;
+  let right = (num / 2) | 0;
+
+  while (left <= right) {
+    const mid = ((left + right) / 2) | 0;
+    if (mid == 0) return false;
+
+    const div = (num / mid) | 0;
+    if (div ** 2 == num) return true;
+
+    if (div < mid) {
+      right = mid - 1;
+    } else {
+      left = mid + 1;
+    }
   }
-  return true;
+
+  return false;
 };
