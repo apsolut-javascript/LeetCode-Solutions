@@ -1,13 +1,16 @@
+package com.peter._2020._30.days.trail.may._7;
+
+import com.peter.utils.TreeNode;
 
 /**
  * Definition for a binary tree node.
- * public class TreeNode {
+ * public class com.peter.utils.TreeNode {
  * int val;
- * TreeNode left;
- * TreeNode right;
- * TreeNode() {}
- * TreeNode(int val) { this.val = val; }
- * TreeNode(int val, TreeNode left, TreeNode right) {
+ * com.peter.utils.TreeNode left;
+ * com.peter.utils.TreeNode right;
+ * com.peter.utils.TreeNode() {}
+ * com.peter.utils.TreeNode(int val) { this.val = val; }
+ * com.peter.utils.TreeNode(int val, com.peter.utils.TreeNode left, com.peter.utils.TreeNode right) {
  * this.val = val;
  * this.left = left;
  * this.right = right;
@@ -15,7 +18,7 @@
  * }
  */
 class Solution {
-    public boolean isCousins(TreeNode root, int x, int y) {
+    boolean isCousins(TreeNode root, int x, int y) {
         var target1 = getDepth(root, root.left, x, 1);
         if (target1 == null) target1 = getDepth(root, root.right, x, 1);
 
@@ -27,7 +30,7 @@ class Solution {
         return target1.left != target2.left && target1.val == target2.val;
     }
 
-    TreeNode getDepth(TreeNode parent, TreeNode child, int target, int depth) {
+    private TreeNode getDepth(TreeNode parent, TreeNode child, int target, int depth) {
         if (child == null) return null;
 
         if (child.val == target) {

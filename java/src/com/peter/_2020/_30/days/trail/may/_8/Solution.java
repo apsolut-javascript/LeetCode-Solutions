@@ -1,3 +1,5 @@
+package com.peter._2020._30.days.trail.may._8;
+
 public class Solution {
     public static void main(String[] args) {
         int[][] input = {{-4, -3}, {1, 0}, {3, -1}, {0, -1}, {-5, 2}};

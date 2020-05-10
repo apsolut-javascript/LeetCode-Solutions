@@ -1,4 +1,4 @@
-//Given a binary tree, return the level order traversal of its nodes' values. (i
+package com.peter.problems._102;//Given a binary tree, return the level order traversal of its nodes' values. (i
 //e, from left to right, level by level).
 //
 //
@@ -26,18 +26,19 @@
 
 //leetcode submit region begin(Prohibit modification and deletion)
 
+import com.peter.utils.TreeNode;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Definition for a binary tree node.
- * public class TreeNode {
+ * public class com.peter.utils.TreeNode {
  * int val;
- * TreeNode left;
- * TreeNode right;
- * TreeNode() {}
- * TreeNode(int val) { this.val = val; }
- * TreeNode(int val, TreeNode left, TreeNode right) {
+ * com.peter.utils.TreeNode left;
+ * com.peter.utils.TreeNode right;
+ * com.peter.utils.TreeNode() {}
+ * com.peter.utils.TreeNode(int val) { this.val = val; }
+ * com.peter.utils.TreeNode(int val, com.peter.utils.TreeNode left, com.peter.utils.TreeNode right) {
  * this.val = val;
  * this.left = left;
  * this.right = right;

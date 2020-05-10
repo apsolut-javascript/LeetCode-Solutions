@@ -3,4 +3,5 @@ node_modules/
 index.js
 report.*.json
 .idea/
+java/out/
 

@@ -1,4 +1,11 @@
+package com.peter._2020._30.days.trail.may._9;
+
 class Solution {
+    public static void main(String[] args) {
+        Solution s = new Solution();
+        assert !s.isPerfectSquare(5);
+    }
+
     public boolean isPerfectSquare(int num) {
         if (num <= 1) return true;
 
