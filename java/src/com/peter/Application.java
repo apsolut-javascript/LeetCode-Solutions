@@ -1,6 +1,7 @@
 package com.peter;
 
 import com.peter._2020._30.days.trail.may._16_Odd_Even_Linked_List.Solution;
+import com.peter.utils.TreeNode;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -19,20 +20,9 @@ public class Application {
     }
 
     private static void play() {
-        var list = new ArrayList<Integer>();
-        list.add(1);
-        list.add(3);
-        list.add(3);
-        list.add(2);
-        list.add(2);
-        list.add(2);
-        list.add(2);
-        list.add(1);
-        list.add(4);
-
-        Collections.sort(list);
-        System.out.println(Collections.binarySearch(list, 2));
-
-        list.forEach(System.out::println);
+        var root = TreeNode.createTree("[5,3,6,2,4,null,null,1]");
+        System.out.println(root.val);
+        System.out.println(root.left.val);
+        System.out.println(root.right.val);
     }
 }
