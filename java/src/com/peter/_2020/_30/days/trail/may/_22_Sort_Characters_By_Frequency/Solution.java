@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 public class Solution {
     public static void main(String[] args) {
         Solution solution = new Solution();
-        assert solution.frequencySort("tree") == "eetr";
+        assert solution.frequencySort("tree").equals("eert");
     }
 
     public String frequencySort(String s) {
@@ -19,9 +19,7 @@ public class Solution {
         entries.sort((o1, o2) -> o2.getValue() - o1.getValue());
         var sb = new StringBuilder(s.length());
         for (Map.Entry<Character, Integer> e : entries) {
-            var subString = new char[e.getValue()];
-            Arrays.fill(subString, e.getKey());
-            sb.append(subString);
+            sb.append(String.valueOf(e.getKey()).repeat(e.getValue()));
         }
 
         return sb.toString();
