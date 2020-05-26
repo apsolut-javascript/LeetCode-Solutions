@@ -1,6 +1,6 @@
 package com.peter._2020._30.days.trail.may._26_Contiguous_Array;
 
-import java.util.Arrays;
+import java.util.HashMap;
 
 public class Solution {
     public static void main(String[] args) {
@@ -13,21 +13,19 @@ public class Solution {
     }
 
     public int findMaxLength(int[] nums) {
-        if (nums.length == 0) return 0;
-        int[] ones = new int[nums.length];
-        var max = nums.length % 2 == 0 ? nums.length : nums.length - 1;
-        ones[0] = nums[0];
-        for (int i = 1; i < nums.length; i++) {
-            ones[i] = ones[i - 1] + nums[i];
-        }
-
-        while (max > 0) {
-            var val = max / 2;
-            if (ones[max - 1] == val) break;
-            for (int i = 1; i + max - 1 < nums.length; i++) {
-                if (ones[i + max - 1] - ones[i - 1] == val) return max;
+        int max = 0, count = 0;
+        var map = new HashMap<Integer, Integer>();
+        map.put(0, -1);
+        for (int i = 0; i < nums.length; i++) {
+            count += nums[i] == 0 ? -1 : 1;
+            if (map.containsKey(count)) {
+                int dist = i - map.get(count);
+                if (dist > max) {
+                    max = dist;
+                }
+            } else {
+                map.put(count, i);
             }
-            max -= 2;
         }
 
         return max;
