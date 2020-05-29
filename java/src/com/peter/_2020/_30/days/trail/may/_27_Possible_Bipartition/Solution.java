@@ -1,5 +1,9 @@
 package com.peter._2020._30.days.trail.may._27_Possible_Bipartition;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class Solution {
     public static void main(String[] args) {
         Solution solution = new Solution();
@@ -12,61 +16,72 @@ public class Solution {
     }
 
     public boolean possibleBipartition(int N, int[][] dislikes) {
-        var group1 = new int[N + 1];
-        var group2 = new int[N + 1];
-        boolean result = tryPartition(0, dislikes, group1, group2);
-        System.out.println(result);
-        if (result) {
-            for (int[] d : dislikes) {
-                var a = d[0];
-                var b = d[1];
-                if (group1[a] + group1[b] == 2 || group2[a] + group2[b] == 2) return false;
-            }
-        }
-        return result;
+        return new Solver(N, dislikes).solve();
     }
 
-    private boolean tryPartition(int current, int[][] dislikes, int[] group1, int[] group2) {
-        if (current >= dislikes.length) return true;
-        var d = dislikes[current];
-        var a = d[0];
-        var b = d[1];
-        if (group1[a] + group1[b] == 2 || group2[a] + group2[b] == 2) return false;
+    private static class Solver {
+        private final int[] group2;
+        private final int[] group1;
+        private final List<int[]> dislikes;
 
-        if (group1[a] + group2[b] == 2 || group2[a] + group1[b] == 2) return tryPartition(current + 1, dislikes, group1, group2);
-        else if (group1[a] == 1) {
-            group2[b] = 1;
-            boolean result = tryPartition(current + 1, dislikes, group1, group2);
-            if (!result) group2[b] = 0;
-            return result;
-        } else if (group1[b] == 1) {
-            group2[a] = 1;
-            boolean result = tryPartition(current + 1, dislikes, group1, group2);
-            if (!result) group2[a] = 0;
-            return result;
-        } else if (group2[a] == 1) {
-            group1[b] = 1;
-            boolean result = tryPartition(current + 1, dislikes, group1, group2);
-            if (!result) group1[b] = 0;
-            return result;
-        } else if (group2[b] == 1) {
-            group1[a] = 1;
-            boolean result = tryPartition(current + 1, dislikes, group1, group2);
-            if (!result) group1[a] = 0;
-            return result;
-        } else {
-            group1[a] = 1;
-            group2[b] = 1;
-            boolean result = tryPartition(current + 1, dislikes, group1, group2);
-            if (!result && current > 0) {
-                group1[a] = 0;
-                group2[b] = 0;
-                group1[b] = 1;
-                group2[a] = 1;
-                return tryPartition(current + 1, dislikes, group1, group2);
+        public Solver(int N, int[][] dislikes) {
+            group1 = new int[N + 1];
+            group2 = new int[N + 1];
+            this.dislikes = new ArrayList<>(Arrays.asList(dislikes));
+        }
+
+        public boolean solve() {
+            if (dislikes.isEmpty()) return true;
+            var hadMatch = false;
+            while (!dislikes.isEmpty()) {
+                if (!hadMatch) {
+                    var d = dislikes.remove(0);
+                    group1[d[0]] = 1;
+                    group2[d[1]] = 1;
+                }
+
+                hadMatch = false;
+
+                for (int i = 0; i < dislikes.size(); i++) {
+                    var d = dislikes.get(i);
+                    int a = d[0], b = d[1];
+                    if (inGroup1(a, b) || inGroup2(a, b)) return false;
+
+                    if (inGroup1(a) || inGroup2(b)) {
+                        group1[a] = 1;
+                        group2[b] = 1;
+                        dislikes.remove(i);
+                        hadMatch = true;
+                        break;
+                    }
+
+                    if (inGroup1(b) || inGroup2(a)) {
+                        group1[b] = 1;
+                        group2[a] = 1;
+                        dislikes.remove(i);
+                        hadMatch = true;
+                        break;
+                    }
+                }
             }
 
-            return result;
+            return true;
+        }
+
+        private boolean inGroup1(int val) {
+            return group1[val] == 1;
+        }
+
+        private boolean inGroup1(int val1, int val2) {
+            return group1[val1] == 1 && group1[val2] == 1;
+        }
+
+        private boolean inGroup2(int val) {
+            return group2[val] == 1;
+        }
+
+        private boolean inGroup2(int val1, int val2) {
+            return group2[val1] == 1 && group2[val2] == 1;
         }
     }
 }
