@@ -1,5 +1,6 @@
 package com.peter._2020._30.days.trail.may._31_Edit_Distance;
 
+import javax.management.remote.rmi.RMIJRMPServerImpl;
 import java.util.Arrays;
 
 public class Solution {
@@ -10,9 +11,8 @@ public class Solution {
         assert solution.minDistance("park", "spake") == 3;
         assert solution.minDistance("sea", "eat") == 2;
         assert solution.minDistance("plasma", "altruism") == 6;
-//        assert solution.minDistance("trinitrophenylmethylnitramine", "dinitrophenylhydrazine") == 5;
-//        assert solution.minDistance("pneumonoultramicroscopicsilicovolcanoconiosis", "ultramicroscopically") == 5;
-
+        assert solution.minDistance("trinitrophenylmethylnitramine", "dinitrophenylhydrazine") == 10;
+        assert solution.minDistance("pneumonoultramicroscopicsilicovolcanoconiosis", "ultramicroscopically") == 27;
     }
 
     public int minDistance(String word1, String word2) {
@@ -20,10 +20,10 @@ public class Solution {
         for (int[] arr : dp) {
             Arrays.fill(arr, -1);
         }
-        return dfs(new StringBuilder(word1), new StringBuilder(word2), 0, 0, dp);
+        return dfs(word1, word2, 0, 0, dp);
     }
 
-    private int dfs(StringBuilder w1, StringBuilder w2, int i, int j, int[][] dp) {
+    private int dfs(String w1, String w2, int i, int j, int[][] dp) {
         if (w1.length() == i) return w2.length() - j;
         if (w2.length() == j) return w1.length() - i;
 
