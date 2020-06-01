@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.PriorityQueue;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.stream.Collectors;
 
 public class Application {
     public static void main(String[] args) {
@@ -20,9 +22,6 @@ public class Application {
     }
 
     private static void play() {
-        var root = TreeNode.createTree("[5,3,6,2,4,null,null,1]");
-        System.out.println(root.val);
-        System.out.println(root.left.val);
-        System.out.println(root.right.val);
+        System.out.println(ThreadLocalRandom.current().nextInt(1,100));
     }
 }
