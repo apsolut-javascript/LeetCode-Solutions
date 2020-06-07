@@ -33,12 +33,25 @@ public class Solution {
         }
 
         var orders = new ArrayDeque<Integer>(people.length);
-        while (!candidates.isEmpty()){
-            candidates.sort((a, b) -> a[1] != b[1] ? a[1] - b[1] : a[0] - b[0]);
-            var c = candidates.remove(0);
+        while (!candidates.isEmpty()) {
+            var min = Integer.MAX_VALUE;
+            var index = -1;
+            for (int i = 0; i < candidates.size(); i++) {
+                int[] val = candidates.get(i);
+                if (val[1] > 0) continue;
+
+                if (val[0] < min) {
+                    min = val[0];
+                    index = i;
+                }
+            }
+            var c = candidates.remove(index);
             orders.offer(c[2]);
             final var h = c[0];
-            candidates.stream().filter(a -> a[0] <= h).forEach(a -> a[1]--);
+            for (int[] candidate : candidates) {
+                if (candidate[0] > h) continue;
+                candidate[1]--;
+            }
         }
         var result = new int[people.length][];
         for (int i = 0; i < result.length; i++) {
