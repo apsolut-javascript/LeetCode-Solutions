@@ -5,10 +5,7 @@ import com.peter.utils.TreeNode;
 
 import java.time.Duration;
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.PriorityQueue;
+import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 
@@ -22,6 +19,10 @@ public class Application {
     }
 
     private static void play() {
-        System.out.println(ThreadLocalRandom.current().nextInt(1,100));
+        Deque<Integer> deque = new ArrayDeque<>();
+        deque.addLast(1);
+        deque.addLast(3);
+        deque.addLast(2);
+        System.out.println("deque = " + Arrays.toString(deque.toArray()));
     }
 }
