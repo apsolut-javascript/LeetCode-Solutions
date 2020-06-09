@@ -19,10 +19,5 @@ public class Application {
     }
 
     private static void play() {
-        Deque<Integer> deque = new ArrayDeque<>();
-        deque.addLast(1);
-        deque.addLast(3);
-        deque.addLast(2);
-        System.out.println("deque = " + Arrays.toString(deque.toArray()));
     }
 }
