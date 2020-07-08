@@ -30,6 +30,12 @@ describe("2020-July-leetcoding-challenge 8", () => {
   });
 
   test("case 5", () => {
+    const result = target([0, 0, 0]);
+
+    expect(result).toHaveLength(1);
+  });
+
+  test("case 6", () => {
     const result = target([
       82597,
       -9243,
