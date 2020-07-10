@@ -1,7 +1,10 @@
 node_modules/
 *.log
 index.js
+index.test.js
+index.html
 report.*.json
 .idea/
 java/out/
 .DS_Store
+
