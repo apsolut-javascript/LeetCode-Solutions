@@ -6,7 +6,7 @@ function ListNode(val) {
 /**
  * Create link list from array
  */
-const createList = vals => {
+const arrToNodes = vals => {
   const head = new ListNode(null);
   let tail = head;
   vals.forEach(a => {
@@ -20,7 +20,7 @@ const createList = vals => {
 /**
  * Change link list to array
  */
-const toList = head => {
+const nodesToArr = head => {
   const list = [];
   let node = head;
   while (node != null) {
@@ -30,4 +30,4 @@ const toList = head => {
   return list;
 };
 
-export { createList, toList };
+export { arrToNodes, nodesToArr };
