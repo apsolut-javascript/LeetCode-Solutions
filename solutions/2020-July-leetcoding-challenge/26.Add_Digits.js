@@ -2,4 +2,15 @@
  * @param {number} num
  * @return {number}
  */
-var addDigits = function (num) {};
+var addDigits = function (num) {
+  if (num < 10) return num;
+
+  let sum = 0;
+  while (num > 0) {
+    sum += num % 10;
+    num /= 10;
+    num |= 0;
+  }
+
+  return addDigits(sum);
+};
