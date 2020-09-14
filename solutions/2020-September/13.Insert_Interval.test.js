@@ -53,7 +53,6 @@ test("case 5", () => {
     ],
     [6, 6]
   );
-  console.log("---------> : result", result);
   expect(result).toEqual([
     [3, 5],
     [6, 6],
