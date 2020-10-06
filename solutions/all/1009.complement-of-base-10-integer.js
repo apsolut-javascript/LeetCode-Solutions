@@ -11,12 +11,11 @@
  */
 var bitwiseComplement = function (N) {
   if (N == 0) return 1;
-  let num = N;
-  let mask = 0;
-  while (num > 0) {
-    mask = (mask << 1) + 1;
-    num >>= 1;
+  let mask = 1;
+  while (mask <= N) {
+    mask <<= 1;
   }
+  mask -= 1;
   return N ^ mask;
 };
 
