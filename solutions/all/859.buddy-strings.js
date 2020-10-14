@@ -12,29 +12,21 @@
  */
 var buddyStrings = function (a, b) {
   if (a.length != b.length) return false;
-  const charsA = countChars(a);
-  const charsB = countChars(b);
-  const entries = Object.entries(charsA);
-  if (Object.entries(charsB).length != entries.length) return false;
-  for (let i = 0; i < entries.length; i++) {
-    const [k, v] = entries[i];
-    if (charsB[k] != v) return false;
-  }
-  let diff = 0;
   for (let i = 0; i < a.length; i++) {
-    if (a[i] != b[i]) {
-      diff++;
-      if (diff > 2) return false;
+    if (a[i] == b[i]) continue;
+    for (let j = i + 1; j < a.length; j++) {
+      if (a[j] == b[j]) continue;
+
+      const c1 = a[i];
+      const c2 = a[j];
+      a = a.slice(0, i) + c2 + a.slice(i + 1, j) + c1 + a.slice(j + 1);
+      return a == b;
     }
+
+    return false;
   }
-  if (diff == 2) return true;
-  if (diff == 0 && Object.values(charsA).some(v => v >= 2)) return true;
 
-  return false;
-};
-
-const countChars = a =>
-  Array.prototype.reduce.call(
+  const chars = Array.prototype.reduce.call(
     a,
     (p, c) => {
       if (!p[c]) p[c] = 0;
@@ -43,6 +35,8 @@ const countChars = a =>
     },
     {}
   );
+  return Object.values(chars).some(v => v >= 2);
+};
 
 module.exports = buddyStrings;
 // @lc code=end
