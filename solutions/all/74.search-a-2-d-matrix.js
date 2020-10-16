@@ -8,40 +8,21 @@
  * @param {number} target
  * @return {boolean}
  */
-var searchMatrix = function(matrix, target) {
+var searchMatrix = function (matrix, target) {
   if (matrix.length == 0 || matrix[0].length == 0) return false;
 
-  const n = matrix[0].length;
-  let low = 0,
-    up = matrix.length - 1;
-  let mid = 0;
-  while (low <= up) {
-    mid = ((up - low) >> 1) + low;
-    const start = matrix[mid][0],
-      end = matrix[mid][n - 1];
-    if (target < start) {
-      up = mid - 1;
-    } else if (end < target) {
-      low = mid + 1;
-    } else {
-      if (start == target || target == end) return true;
-      break;
-    }
-  }
-
-  const group = matrix[mid];
-  low = 1;
-  up = n - 2;
-  while (low <= up) {
-    mid = ((up - low) >> 1) + low;
-    const num = group[mid];
-    if (num < target) {
-      low = mid + 1;
-    } else if (target < num) {
-      up = mid - 1;
-    } else {
-      return true;
-    }
+  const width = matrix[0].length;
+  const length = matrix.length * width;
+  let start = 0;
+  let end = length - 1;
+  while (start <= end) {
+    const mid = (start + end) >> 1;
+    const i = (mid / width) | 0;
+    const j = mid % width;
+    const val = matrix[i][j];
+    if (val == target) return true;
+    if (val < target) start = mid + 1;
+    else end = mid - 1;
   }
 
   return false;
