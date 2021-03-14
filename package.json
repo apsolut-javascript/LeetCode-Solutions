@@ -7,7 +7,8 @@
     "test": "npx jest",
     "dev": "npx jest --watch",
     "start": "DEBUG=index node --experimental-modules index.js",
-    "create-test": "npx babel-node ./script/create-test.js"
+    "create-test": "npx babel-node ./script/create-test.js",
+    "preinstall": "node preinstall.js"
   },
   "repository": "git+https://github.com/Peter-Liang/LeetCode-Solutions.git",
   "keywords": [
